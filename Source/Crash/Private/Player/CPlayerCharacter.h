@@ -6,6 +6,7 @@
 #include "Crash/Private/Chatacter/CCharacter.h"
 #include "CPlayerCharacter.generated.h"
 
+struct FInputActionValue;
 class UInputAction;
 class UInputMappingContext;
 class UCameraComponent;
@@ -26,6 +27,8 @@ public:
 
 private:
 	
+	void HandleLookInput(const FInputActionValue& InputActionValue);
+	
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	TObjectPtr<USpringArmComponent> CameraBoom;
 	
@@ -34,6 +37,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> JumpInputAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> LookInputAction;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputMappingContext> GameplayInputMappingContext;
