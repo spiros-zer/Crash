@@ -6,6 +6,8 @@
 #include "Crash/Private/Chatacter/CCharacter.h"
 #include "CPlayerCharacter.generated.h"
 
+class UInputAction;
+class UInputMappingContext;
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -17,6 +19,10 @@ class CRASH_API ACPlayerCharacter : public ACCharacter
 public:
 	
 	ACPlayerCharacter();
+	
+	virtual void PawnClientRestart() override;
+	
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 private:
 	
@@ -25,4 +31,10 @@ private:
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	TObjectPtr<UCameraComponent> ViewCamera;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> JumpInputAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputMappingContext> GameplayInputMappingContext;
 };
