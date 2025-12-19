@@ -19,9 +19,28 @@ void UCAnimInstance::NativeInitializeAnimation()
 void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
+	
+	if (!IsValid(OwnerCharacter)) return;
+	
+	Speed = OwnerCharacter->GetVelocity().Length();
 }
 
 void UCAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
+}
+
+float UCAnimInstance::GetSpeed() const
+{
+	return Speed;
+}
+
+bool UCAnimInstance::IsMoving() const
+{
+	return Speed != 0.f;
+}
+
+bool UCAnimInstance::IsNotMoving() const
+{
+	return Speed == 0.f;
 }

@@ -17,3 +17,12 @@ When binding the move input action, don't use the raw `FInputActionValue` data a
 NativeInitializeAnimation gathers info about stuff that won't change.
 
 NativeThreadSafeUpdateAnimation to perform heavy calculations.
+
+## 11. Add the Speed Attribute to Drive Ground Locomotion
+
+To mark a funciton as thread safe (e.g. for `UAnimInstance::NativeThreadSafeUpdateAnimation` mark it with the meta specifier `meta = (BlueprintThreadSafe)).
+
+Use Synchronization Groups to sync animations that don't match and/or have different paces.
+
+> Sync markers are used for syncing groups which can be added by right-clicking in animation and selection `Add Sync Marker`.
+> The anim sequence marked as `Group Leader` doesn't change or shift. Everything else follows this by stretching its time.
