@@ -3,6 +3,9 @@
 
 #include "CCharacter.h"
 
+#include "GAS/CAbilitySystemComponent.h"
+#include "GAS/CAttributeSet.h"
+
 
 // Sets default values
 ACCharacter::ACCharacter()
@@ -11,24 +14,14 @@ ACCharacter::ACCharacter()
 	PrimaryActorTick.bCanEverTick = false;
 	
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-}
-
-// Called when the game starts or when spawned
-void ACCharacter::BeginPlay()
-{
-	Super::BeginPlay();
 	
+	CAbilitySystemComponent = CreateDefaultSubobject<UCAbilitySystemComponent>("CAbilitySystemComponent");
+	
+	CAttributeSet = CreateDefaultSubobject<UCAttributeSet>("CAttributeSet");
 }
 
-// Called every frame
-void ACCharacter::Tick(float DeltaTime)
+UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 {
-	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void ACCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	return CAbilitySystemComponent;
 }
 
