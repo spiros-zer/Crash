@@ -12,7 +12,7 @@ class APlayerState;
  * Package to keep track of player selection info
  */
 USTRUCT()
-struct FPlayerSelection
+struct CRASH_API FPlayerSelection
 {
 	GENERATED_BODY()
 	
