@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACGameState;
+class ALobbyPlayerController;
 class UTeamSelectionWidget;
 class UUniformGridPanel;
 class UButton;
@@ -21,11 +24,9 @@ class CRASH_API ULobbyWidget : public UUserWidget
 	
 protected:
 	
+	virtual void NativeOnInitialized() override;
+	
 	virtual void NativeConstruct() override;
-	
-	void ClearAndPopulateTeamSelectionSlots();
-	
-	void SlotSelected(uint8 NewSlotID);
 	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UWidgetSwitcher> MainSwitcher;
@@ -39,9 +40,27 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> TeamSelectionSlotGridPanel;
 	
+private:
+	
+	void ClearAndPopulateTeamSelectionSlots();
+	
+	void SlotSelected(uint8 NewSlotID);
+
+	void ConfigureGameState();
+	
+	void UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& PlayerSelections);
+	
 	UPROPERTY(EditDefaultsOnly, Category= "TeamSelection")
 	TSubclassOf<UTeamSelectionWidget> TeamSelectionWidgetClass;
 	
 	UPROPERTY()
 	TArray<TObjectPtr<UTeamSelectionWidget>> TeamSelectionSlots;
+	
+	UPROPERTY()
+	TObjectPtr<ALobbyPlayerController> LobbyPlayerController;
+	
+	UPROPERTY()
+	TObjectPtr<ACGameState> CGameState;
+	
+	FTimerHandle ConfigureGameStateTimerHandle;
 };

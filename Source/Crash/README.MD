@@ -52,3 +52,7 @@ Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player stat
 ## 224. Create the Player Selection Structure
 
 When using a `FUniqueNetIdRepl` it can be accessed through the player state.
+
+## 226. Connect the Lobby Widget with The Player Slot Selection System
+
+When a widget is generated, it is not guaranteed that its game state is updated to the correct type. 
