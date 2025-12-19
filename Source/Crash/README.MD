@@ -12,3 +12,8 @@ When binding the move input action, don't use the raw `FInputActionValue` data a
 
 > For the move forward vector, cross product the camera's right and forward vectors and normalizing the output will be smoother in calculations.
 
+## 10. Create the Animation Instance
+
+NativeInitializeAnimation gathers info about stuff that won't change.
+
+NativeThreadSafeUpdateAnimation to perform heavy calculations.
