@@ -39,6 +39,12 @@ public:
 	FORCEINLINE float GetSmoothedYawSpeed() const;
 	
 	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
+	FORCEINLINE float GetLookYawOffset() const;
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
+	FORCEINLINE float GetLookPitchOffset() const;
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
 	FORCEINLINE bool IsMoving() const;
 	
 	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
@@ -68,4 +74,6 @@ private:
 	float YawSpeedSmoothLerpSpeed = 1.f;
 	
 	FRotator BodyPreviousRotation;
+	
+	FRotator LookRotOffset;
 };

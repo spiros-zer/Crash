@@ -36,6 +36,10 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	
 	SmoothedYawSpeed = UKismetMathLibrary::FInterpTo(SmoothedYawSpeed, YawSpeed, DeltaSeconds, YawSpeedSmoothLerpSpeed);
 	
+	FRotator ControlRot = OwnerCharacter->GetBaseAimRotation();
+	
+	LookRotOffset = UKismetMathLibrary::NormalizedDeltaRotator(ControlRot, BodyRotation);
+	
 	if (!IsValid(OwnerMovementComponent)) return;
 
 	bIsJumping = OwnerMovementComponent->IsFalling();
@@ -69,6 +73,16 @@ float UCAnimInstance::GetYawSpeed() const
 float UCAnimInstance::GetSmoothedYawSpeed() const
 {
 	return SmoothedYawSpeed;
+}
+
+float UCAnimInstance::GetLookYawOffset() const
+{
+	return LookRotOffset.Yaw;
+}
+
+float UCAnimInstance::GetLookPitchOffset() const
+{
+	return LookRotOffset.Pitch;
 }
 
 bool UCAnimInstance::IsMoving() const
