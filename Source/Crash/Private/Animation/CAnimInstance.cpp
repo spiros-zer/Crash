@@ -4,6 +4,7 @@
 #include "CAnimInstance.h"
 
 #include "GameFramework/Character.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void UCAnimInstance::NativeInitializeAnimation()
 {
@@ -23,6 +24,16 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (!IsValid(OwnerCharacter)) return;
 	
 	Speed = OwnerCharacter->GetVelocity().Length();
+
+	const FRotator BodyRotation = OwnerCharacter->GetActorRotation();
+
+	const FRotator BodyRotDelta = UKismetMathLibrary::NormalizedDeltaRotator(BodyRotation, BodyPreviousRotation);
+	
+	YawSpeed = BodyRotDelta.Yaw / DeltaSeconds;
+	
+	BodyPreviousRotation = BodyRotation;
+	
+	SmoothedYawSpeed = UKismetMathLibrary::FInterpTo(SmoothedYawSpeed, YawSpeed, DeltaSeconds, YawSpeedSmoothLerpSpeed);
 }
 
 void UCAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
@@ -33,6 +44,16 @@ void UCAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 float UCAnimInstance::GetSpeed() const
 {
 	return Speed;
+}
+
+float UCAnimInstance::GetYawSpeed() const
+{
+	return YawSpeed;
+}
+
+float UCAnimInstance::GetSmoothedYawSpeed() const
+{
+	return SmoothedYawSpeed;
 }
 
 bool UCAnimInstance::IsMoving() const
