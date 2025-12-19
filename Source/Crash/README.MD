@@ -26,3 +26,7 @@ Use Synchronization Groups to sync animations that don't match and/or have diffe
 
 > Sync markers are used for syncing groups which can be added by right-clicking in animation and selection `Add Sync Marker`.
 > The anim sequence marked as `Group Leader` doesn't change or shift. Everything else follows this by stretching its time.
+
+## 19 Add the Health and Mana Attribute to the Attribute Set
+
+Use `AbilitySystem.DebugAttribute Attribute1 ...` editor command to show a graphic with the attributes' values.
