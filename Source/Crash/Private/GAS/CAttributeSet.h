@@ -23,6 +23,8 @@ class CRASH_API UCAttributeSet : public UAttributeSet
 	
 public:
 	
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+	
 	ATTRIBUTE_ACCESSORS(ThisClass, Health)
 	ATTRIBUTE_ACCESSORS(ThisClass, MaxHealth)
 	ATTRIBUTE_ACCESSORS(ThisClass, Mana)
@@ -30,15 +32,27 @@ public:
 	
 private:
 	
-	UPROPERTY()
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	void OnRep_Mana(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	void OnRep_MaxMana(const FGameplayAttributeData& OldValue);
+	
+	UPROPERTY(ReplicatedUsing = OnRep_Health)
 	FGameplayAttributeData Health;
 	
-	UPROPERTY()
+	UPROPERTY(ReplicatedUsing = OnRep_MaxHealth)
 	FGameplayAttributeData MaxHealth;
 	
-	UPROPERTY()
+	UPROPERTY(ReplicatedUsing = OnRep_Mana)
 	FGameplayAttributeData Mana;
 	
-	UPROPERTY()
+	UPROPERTY(ReplicatedUsing = OnRep_MaxMana)
 	FGameplayAttributeData MaxMana;
 };

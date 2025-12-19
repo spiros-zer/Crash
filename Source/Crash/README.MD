@@ -40,3 +40,7 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 ## 21. Setup the Server Client Call Chain
 
 `APlayerController::OnPossess` called on server and `AcknowledgePossession` called on client. These are used to `InitAbilityActorInfo`.
+
+## 22. Apply the Gameplay Effects and Replicate the Attributes
+
+> GE_FullStat uses the Attribute Based magnitude calculation to set its health and mana to the max counterparts.
