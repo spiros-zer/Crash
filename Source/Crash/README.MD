@@ -30,3 +30,10 @@ Use Synchronization Groups to sync animations that don't match and/or have diffe
 ## 19 Add the Health and Mana Attribute to the Attribute Set
 
 Use `AbilitySystem.DebugAttribute Attribute1 ...` editor command to show a graphic with the attributes' values.
+
+## 20 What is a Gameplay Effect and How to Apply Them
+
+Gameplay Effects are like configurations. They are specified from BPs and then through code are instantiated. These instances are the gameplay effect specs that's why during their creation a class of the GE is passed.
+
+> GE_Init will initialize max HP and Mana.
+
