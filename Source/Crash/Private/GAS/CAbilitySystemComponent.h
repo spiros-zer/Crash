@@ -19,5 +19,6 @@ public:
 	
 private:
 	
+	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
 };

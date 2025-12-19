@@ -19,11 +19,15 @@ public:
 	// Sets default values for this character's properties
 	ACCharacter();
 	
+	void ServerSideInit();
+	
+	void ClientSideInit();
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
 private:
 	
-	UPROPERTY()
+	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
 	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;
 	
 	UPROPERTY()

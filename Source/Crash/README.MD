@@ -37,3 +37,6 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 
 > GE_Init will initialize max HP and Mana.
 
+## 21. Setup the Server Client Call Chain
+
+`APlayerController::OnPossess` called on server and `AcknowledgePossession` called on client. These are used to `InitAbilityActorInfo`.
