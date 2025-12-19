@@ -48,3 +48,7 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
+
+## 224. Create the Player Selection Structure
+
+When using a `FUniqueNetIdRepl` it can be accessed through the player state.
