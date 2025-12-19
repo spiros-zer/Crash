@@ -4,6 +4,7 @@
 #include "CAnimInstance.h"
 
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
 void UCAnimInstance::NativeInitializeAnimation()
@@ -34,11 +35,25 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	BodyPreviousRotation = BodyRotation;
 	
 	SmoothedYawSpeed = UKismetMathLibrary::FInterpTo(SmoothedYawSpeed, YawSpeed, DeltaSeconds, YawSpeedSmoothLerpSpeed);
+	
+	if (!IsValid(OwnerMovementComponent)) return;
+
+	bIsJumping = OwnerMovementComponent->IsFalling();
 }
 
 void UCAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
+}
+
+bool UCAnimInstance::GetIsJumping() const
+{
+	return bIsJumping;
+}
+
+bool UCAnimInstance::GetIsGrounded() const
+{
+	return !bIsJumping;
 }
 
 float UCAnimInstance::GetSpeed() const

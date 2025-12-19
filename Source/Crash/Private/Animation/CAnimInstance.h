@@ -24,6 +24,12 @@ public:
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 	
 	UFUNCTION(BlueprintGetter, meta = (BlueprintThreadSafe))
+	FORCEINLINE bool GetIsJumping() const;
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
+	FORCEINLINE bool GetIsGrounded() const;
+	
+	UFUNCTION(BlueprintGetter, meta = (BlueprintThreadSafe))
 	FORCEINLINE float GetSpeed() const;
 	
 	UFUNCTION(BlueprintGetter, meta = (BlueprintThreadSafe))
@@ -45,6 +51,9 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UCharacterMovementComponent> OwnerMovementComponent;
+	
+	UPROPERTY(BlueprintGetter = GetIsJumping)
+	bool bIsJumping = false;
 	
 	UPROPERTY(BlueprintGetter = GetSpeed)
 	float Speed = 0;
