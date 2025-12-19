@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "MenuPlayerController.generated.h"
 
+class UUserWidget;
+
 /**
  * 
  */
@@ -13,4 +15,20 @@ UCLASS()
 class CRASH_API AMenuPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+	
+public:
+
+	virtual void BeginPlay() override;
+	
+	virtual void OnRep_PlayerState() override;
+	
+private:
+	
+	void SpawnWidget();
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Menu")
+	TSubclassOf<UUserWidget> MenuWidgetClass;
+	
+	UPROPERTY()
+	TObjectPtr<UUserWidget> MenuWidget;
 };

@@ -13,4 +13,8 @@ UCLASS()
 class CRASH_API ALobbyGameMode : public ACGameMode
 {
 	GENERATED_BODY()
+	
+public:
+	
+	ALobbyGameMode();
 };

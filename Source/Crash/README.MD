@@ -44,3 +44,7 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 ## 22. Apply the Gameplay Effects and Replicate the Attributes
 
 > GE_FullStat uses the Attribute Based magnitude calculation to set its health and mana to the max counterparts.
+
+## 221. Create the Lobby Level and Spawn the Lobby Widget
+
+Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
