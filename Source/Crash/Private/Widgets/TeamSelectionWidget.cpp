@@ -20,7 +20,7 @@ void UTeamSelectionWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 	
-	SelectButton->OnClicked.AddUniqueDynamic(this, &ThisClass::SelectButtonClicked);
+	SelectButton->OnClicked.AddDynamic(this, &ThisClass::SelectButtonClicked);
 }
 
 void UTeamSelectionWidget::SelectButtonClicked()
