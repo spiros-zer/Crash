@@ -35,6 +35,9 @@ protected:
 	TObjectPtr<UWidget> TeamSelectionRoot;
 	
 	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UWidget> HeroSelectionRoot;
+	
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> StartHeroSelectionButton;
 	
 	UPROPERTY(meta = (BindWidget))
@@ -49,6 +52,14 @@ private:
 	void ConfigureGameState();
 	
 	void UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& PlayerSelections);
+	
+	/** 
+	 * Called when the StartHeroSelectionButton is clicked. Swaps every player to the hero selection screen.
+	 */
+	UFUNCTION()
+	void StartHeroSelectionButtonClicked();
+	
+	void SwitchToHeroSelection();
 	
 	UPROPERTY(EditDefaultsOnly, Category= "TeamSelection")
 	TSubclassOf<UTeamSelectionWidget> TeamSelectionWidgetClass;

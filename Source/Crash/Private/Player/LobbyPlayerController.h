@@ -18,4 +18,13 @@ public:
 	
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_RequestSlotSelectionChange(uint8 NewSlotID);
+	
+	UFUNCTION(Server, Reliable, WithValidation)
+	void Server_StartHeroSelection();
+	
+	UFUNCTION(Client, Reliable)
+	void Client_StartHeroSelection();
+	
+	DECLARE_DELEGATE(FSwitchToHeroSelectionSignature);
+	FSwitchToHeroSelectionSignature SwitchToHeroSelection;
 };

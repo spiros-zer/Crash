@@ -33,6 +33,13 @@ void ACGameState::RequestPlayerSelectionChange(const APlayerState* RequestingPla
 	OnPlayerSelectionUpdated.Broadcast(PlayerSelectionArray);
 }
 
+bool ACGameState::CanStartHeroSelection() const
+{
+	// return whether the players with selections are as many as the players.
+	
+	return PlayerSelectionArray.Num() == PlayerArray.Num();
+}
+
 bool ACGameState::IsSlotOccupied(uint8 SlotID) const
 {
 	for (const FPlayerSelection& PlayerSelection : PlayerSelectionArray)

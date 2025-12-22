@@ -21,6 +21,11 @@ public:
 	
 	void RequestPlayerSelectionChange(const APlayerState* RequestingPlayer, uint8 DesiredSlot);
 	
+	/** 
+	 * Returns whether the game can proceed to the hero selection. 
+	 */
+	bool CanStartHeroSelection() const;
+	
 	bool IsSlotOccupied(uint8 SlotID) const;
 	
 	const TArray<FPlayerSelection>& GetPlayerSelectionArray() const;

@@ -55,4 +55,8 @@ When using a `FUniqueNetIdRepl` it can be accessed through the player state.
 
 ## 226. Connect the Lobby Widget with The Player Slot Selection System
 
-When a widget is generated, it is not guaranteed that its game state is updated to the correct type. 
+When a widget is generated, it is not guaranteed that its game state is updated to the correct type.
+
+## 227. Switch To Hero Selection
+
+`StartHeroSelectionButtonClicked` works so that when pressed by one player, every player will swap to the hero selection screen.

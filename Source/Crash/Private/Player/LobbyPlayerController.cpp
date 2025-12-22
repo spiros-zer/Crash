@@ -8,9 +8,10 @@
 
 void ALobbyPlayerController::Server_RequestSlotSelectionChange_Implementation(uint8 NewSlotID)
 {
-	if (!GetWorld()) return;
+	const UWorld* World = GetWorld();
+	if (!IsValid(World)) return;
 	
-	ACGameState* CGameState = GetWorld()->GetGameState<ACGameState>();
+	ACGameState* CGameState = World->GetGameState<ACGameState>();
 	if (!IsValid(CGameState)) return;
 	CGameState->RequestPlayerSelectionChange(GetPlayerState<APlayerState>(), NewSlotID);
 }
@@ -18,4 +19,29 @@ void ALobbyPlayerController::Server_RequestSlotSelectionChange_Implementation(ui
 bool ALobbyPlayerController::Server_RequestSlotSelectionChange_Validate(uint8 NewSlotID)
 {
 	return true;
+}
+
+void ALobbyPlayerController::Server_StartHeroSelection_Implementation()
+{
+	if (!HasAuthority()) return;
+	
+	const UWorld* World = GetWorld();
+	if (!IsValid(World)) return;
+	
+	for (FConstPlayerControllerIterator PlayerControllerIterator = GetWorld()->GetPlayerControllerIterator(); PlayerControllerIterator; ++PlayerControllerIterator)
+	{
+		ALobbyPlayerController* PlayerController = Cast<ALobbyPlayerController>(*PlayerControllerIterator);
+		if (!IsValid(PlayerController)) return;
+		PlayerController->Client_StartHeroSelection();
+	}
+}
+
+bool ALobbyPlayerController::Server_StartHeroSelection_Validate()
+{
+	return true;
+}
+
+void ALobbyPlayerController::Client_StartHeroSelection_Implementation()
+{
+	SwitchToHeroSelection.ExecuteIfBound();
 }
