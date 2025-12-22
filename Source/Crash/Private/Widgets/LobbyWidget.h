@@ -23,7 +23,7 @@ class CRASH_API ULobbyWidget : public UUserWidget
 	GENERATED_BODY()
 	
 protected:
-	
+
 	virtual void NativeOnInitialized() override;
 	
 	virtual void NativeConstruct() override;
@@ -60,6 +60,8 @@ private:
 	void StartHeroSelectionButtonClicked();
 	
 	void SwitchToHeroSelection();
+	
+	void CharacterDefinitionLoaded();
 	
 	UPROPERTY(EditDefaultsOnly, Category= "TeamSelection")
 	TSubclassOf<UTeamSelectionWidget> TeamSelectionWidgetClass;

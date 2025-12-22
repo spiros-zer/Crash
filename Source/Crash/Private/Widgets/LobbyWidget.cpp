@@ -8,6 +8,7 @@
 #include "Components/UniformGridPanel.h"
 #include "Components/UniformGridSlot.h"
 #include "Components/WidgetSwitcher.h"
+#include "Framework/CAssetManager.h"
 #include "Framework/CGameState.h"
 #include "Network/CNetStatics.h"
 #include "Player/LobbyPlayerController.h"
@@ -24,6 +25,8 @@ void ULobbyWidget::NativeOnInitialized()
 	
 	StartHeroSelectionButton->SetIsEnabled(false);
 	StartHeroSelectionButton->OnClicked.AddUniqueDynamic(this, &ThisClass::StartHeroSelectionButtonClicked);
+	
+	UCAssetManager::Get().LoadCharacterDefinitions(FStreamableDelegate::CreateUObject(this, &ThisClass::CharacterDefinitionLoaded));
 }
 
 void ULobbyWidget::NativeConstruct()
@@ -109,4 +112,15 @@ void ULobbyWidget::StartHeroSelectionButtonClicked()
 void ULobbyWidget::SwitchToHeroSelection()
 {
 	MainSwitcher->SetActiveWidget(HeroSelectionRoot);
+}
+
+void ULobbyWidget::CharacterDefinitionLoaded()
+{
+	TArray<UPA_CharacterDefinition*> LoadedCharacterDefinitions;
+	if (!UCAssetManager::Get().GetLoadedCharacterDefinitions(LoadedCharacterDefinitions)) return;
+	
+	for (UPA_CharacterDefinition* LoadedCharacterDefinition : LoadedCharacterDefinitions)
+	{
+		
+	}
 }
