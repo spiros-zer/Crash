@@ -16,6 +16,8 @@ class CRASH_API ALobbyPlayerController : public AMenuPlayerController
 	
 public:
 	
+	ALobbyPlayerController();
+	
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_RequestSlotSelectionChange(uint8 NewSlotID);
 	

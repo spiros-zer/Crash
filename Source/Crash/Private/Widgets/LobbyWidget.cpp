@@ -3,6 +3,7 @@
 
 #include "LobbyWidget.h"
 
+#include "CharacterDisplay.h"
 #include "CharacterEntryWidget.h"
 #include "TeamSelectionWidget.h"
 #include "Chatacter/PA_CharacterDefinition.h"
@@ -13,6 +14,8 @@
 #include "Components/WidgetSwitcher.h"
 #include "Framework/CAssetManager.h"
 #include "Framework/CGameState.h"
+#include "GameFramework/PlayerStart.h"
+#include "Kismet/GameplayStatics.h"
 #include "Network/CNetStatics.h"
 #include "Player/CPlayerState.h"
 #include "Player/LobbyPlayerController.h"
@@ -33,6 +36,8 @@ void ULobbyWidget::NativeOnInitialized()
 	UCAssetManager::Get().LoadCharacterDefinitions(FStreamableDelegate::CreateUObject(this, &ThisClass::CharacterDefinitionLoaded));
 	
 	CharacterSelectionTileView->OnItemSelectionChanged().AddUObject(this, &ThisClass::CharacterSelected);
+	
+	SpawnCharacterDisplay();
 }
 
 void ULobbyWidget::NativeConstruct()
@@ -115,6 +120,11 @@ void ULobbyWidget::UpdatePlayerSelectionDisplay(const TArray<FPlayerSelection>& 
 		UCharacterEntryWidget* SelectedEntry = CharacterSelectionTileView->GetEntryWidgetFromItem<UCharacterEntryWidget>(PlayerSelection.GetCharacterDefinition());
 		if (!IsValid(SelectedEntry)) continue;
 		SelectedEntry->SetSelected(true);
+		
+		if (PlayerSelection.IsForPlayer(GetOwningPlayerState()))
+		{
+			UpdateCharacterDisplay(PlayerSelection);
+		}
 	}
 	
 	// Check whether we can now proceed to hero selection
@@ -157,4 +167,37 @@ void ULobbyWidget::CharacterSelected(UObject* SelectedUObject)
 	check(CharacterDefinition);
 	
 	CPlayerState->Server_SetSelectedCharacterDefinition(CharacterDefinition);
+}
+
+void ULobbyWidget::SpawnCharacterDisplay()
+{
+	check(IsValid(CharacterDisplayClass));
+	
+	if (CharacterDisplay) return;
+	
+	UWorld* World = GetWorld();
+	if (!IsValid(World)) return;
+	
+	// Configuring spawn location
+	
+	FTransform CharacterDisplayTransform = FTransform::Identity;
+
+	if (const AActor* PlayerStart = UGameplayStatics::GetActorOfClass(World, APlayerStart::StaticClass()))
+	{
+		CharacterDisplayTransform = PlayerStart->GetActorTransform();
+	}
+	
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	CharacterDisplay = World->SpawnActor<ACharacterDisplay>(CharacterDisplayClass, SpawnParams);
+	
+	GetOwningPlayer()->SetViewTarget(CharacterDisplay);
+}
+
+void ULobbyWidget::UpdateCharacterDisplay(const FPlayerSelection& PlayerSelection)
+{
+	if (!PlayerSelection.GetCharacterDefinition()) return;
+	
+	CharacterDisplay->ConfigureWithCharacterDefinition(PlayerSelection.GetCharacterDefinition());
 }

@@ -64,3 +64,7 @@ When a widget is generated, it is not guaranteed that its game state is updated 
 ## 234. Issue and Update Player Character Selection on the Lobby Widget
 
 The player state may initialize after the widget has been constructed.
+
+## 236. Handle the Spawning and Updating Logic of the Character Display
+
+> When `GetOwningPlayer()->SetViewTarget(CharacterDisplay);` was called in the `LobbyWidget`, it was prior to the pawn spawning and the player controller auto activating the default camera. This causes the pawn to be visible for a moment and then the controller activated the camera and the view was changed. To solve this, `ALobbyPlayerController::bAutoManageActiveCameraTarget` was set to `false`. That way the camera doesn't change when the pawn is possessed.

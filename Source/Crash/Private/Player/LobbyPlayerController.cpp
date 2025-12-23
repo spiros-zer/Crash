@@ -6,6 +6,13 @@
 
 #include "Framework/CGameState.h"
 
+ALobbyPlayerController::ALobbyPlayerController()
+{
+	// Disable automatic camera activation.
+	
+	bAutoManageActiveCameraTarget = false;
+}
+
 void ALobbyPlayerController::Server_RequestSlotSelectionChange_Implementation(uint8 NewSlotID)
 {
 	const UWorld* World = GetWorld();

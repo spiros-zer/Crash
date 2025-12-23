@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACharacterDisplay;
 class ACPlayerState;
 class UTileView;
 class ACGameState;
@@ -48,6 +49,12 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UWidgetSwitcher> MainSwitcher;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "CharacterDisplay")
+	TSubclassOf<ACharacterDisplay> CharacterDisplayClass;
+	
+	UPROPERTY()
+	TObjectPtr<ACharacterDisplay> CharacterDisplay;
+	
 private:
 	
 	void ClearAndPopulateTeamSelectionSlots();
@@ -69,6 +76,10 @@ private:
 	void CharacterDefinitionLoaded();
 	
 	void CharacterSelected(UObject* SelectedUObject);
+	
+	void SpawnCharacterDisplay();
+	
+	void UpdateCharacterDisplay(const FPlayerSelection& PlayerSelection);
 	
 	UPROPERTY()
 	TObjectPtr<ACPlayerState> CPlayerState;
