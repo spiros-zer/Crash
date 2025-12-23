@@ -4,7 +4,9 @@
 #include "LobbyWidget.h"
 
 #include "TeamSelectionWidget.h"
+#include "Chatacter/PA_CharacterDefinition.h"
 #include "Components/Button.h"
+#include "Components/TileView.h"
 #include "Components/UniformGridPanel.h"
 #include "Components/UniformGridSlot.h"
 #include "Components/WidgetSwitcher.h"
@@ -119,8 +121,5 @@ void ULobbyWidget::CharacterDefinitionLoaded()
 	TArray<UPA_CharacterDefinition*> LoadedCharacterDefinitions;
 	if (!UCAssetManager::Get().GetLoadedCharacterDefinitions(LoadedCharacterDefinitions)) return;
 	
-	for (UPA_CharacterDefinition* LoadedCharacterDefinition : LoadedCharacterDefinitions)
-	{
-		
-	}
+	CharacterSelectionTileView->SetListItems(LoadedCharacterDefinitions);
 }

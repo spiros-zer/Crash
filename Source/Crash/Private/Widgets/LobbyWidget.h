@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class UTileView;
 class ACGameState;
 class ALobbyPlayerController;
 class UTeamSelectionWidget;
@@ -29,7 +30,13 @@ protected:
 	virtual void NativeConstruct() override;
 	
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UWidgetSwitcher> MainSwitcher;
+	TObjectPtr<UButton> StartHeroSelectionButton;
+	
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTileView> CharacterSelectionTileView;
+	
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UUniformGridPanel> TeamSelectionSlotGridPanel;
 	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UWidget> TeamSelectionRoot;
@@ -38,10 +45,7 @@ protected:
 	TObjectPtr<UWidget> HeroSelectionRoot;
 	
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> StartHeroSelectionButton;
-	
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UUniformGridPanel> TeamSelectionSlotGridPanel;
+	TObjectPtr<UWidgetSwitcher> MainSwitcher;
 	
 private:
 	
