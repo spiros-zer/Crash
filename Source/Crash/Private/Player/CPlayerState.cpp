@@ -22,7 +22,7 @@ void ACPlayerState::BeginPlay()
 	Super::BeginPlay();
 	
 	CGameState = Cast<ACGameState>(UGameplayStatics::GetGameState(this));
-	check(!IsValid(CGameState));
+	if(!IsValid(CGameState)) return;
 	CGameState->OnPlayerSelectionUpdated.AddUObject(this, &ThisClass::PlayerSelectionUpdated);
 }
 
@@ -40,10 +40,13 @@ void ACPlayerState::Server_SetSelectedCharacterDefinition_Implementation(const U
 	if (!IsValid(NewDefinition)) return;
 	
 	if (CGameState->IsDefinitionSelected(NewDefinition)) return;
-	
-	if (!PlayerSelection.GetCharacterDefinition()) return;
-	
-	CGameState->SetCharacterDeselected(PlayerSelection.GetCharacterDefinition());
+
+	// Deselect previously selected character
+
+	if (const UPA_CharacterDefinition* SelectedCharacterDefinition = PlayerSelection.GetCharacterDefinition())
+	{
+		CGameState->SetCharacterDeselected(SelectedCharacterDefinition);
+	}
 	
 	PlayerSelection.SetCharacterDefinition(NewDefinition);
 	

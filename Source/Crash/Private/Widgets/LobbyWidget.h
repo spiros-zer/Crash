@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "LobbyWidget.generated.h"
 
+class ACPlayerState;
 class UTileView;
 class ACGameState;
 class ALobbyPlayerController;
@@ -66,6 +67,11 @@ private:
 	void SwitchToHeroSelection();
 	
 	void CharacterDefinitionLoaded();
+	
+	void CharacterSelected(UObject* SelectedUObject);
+	
+	UPROPERTY()
+	TObjectPtr<ACPlayerState> CPlayerState;
 	
 	UPROPERTY(EditDefaultsOnly, Category= "TeamSelection")
 	TSubclassOf<UTeamSelectionWidget> TeamSelectionWidgetClass;
