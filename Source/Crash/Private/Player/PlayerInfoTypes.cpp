@@ -44,6 +44,16 @@ const FString& FPlayerSelection::GetPlayerNickName() const
 	return PlayerNickName;
 }
 
+const UPA_CharacterDefinition* FPlayerSelection::GetCharacterDefinition() const
+{
+	return CharacterDefinition;
+}
+
+void FPlayerSelection::SetCharacterDefinition(const UPA_CharacterDefinition* InCharacterDefinition)
+{
+	CharacterDefinition = InCharacterDefinition;
+}
+
 bool FPlayerSelection::IsForPlayer(const APlayerState* InPlayerState) const
 {
 	if (!IsValid(InPlayerState))

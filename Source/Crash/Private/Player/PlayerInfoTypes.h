@@ -6,6 +6,7 @@
 
 #include "PlayerInfoTypes.generated.h"
 
+class UPA_CharacterDefinition;
 class APlayerState;
 
 /** 
@@ -30,6 +31,10 @@ struct CRASH_API FPlayerSelection
 	
 	FORCEINLINE const FString& GetPlayerNickName() const;
 	
+	FORCEINLINE const UPA_CharacterDefinition* GetCharacterDefinition() const;
+	
+	FORCEINLINE void SetCharacterDefinition(const UPA_CharacterDefinition* InCharacterDefinition);
+	
 	bool IsForPlayer(const APlayerState* InPlayerState) const;
 	
 	bool IsPlayerSelectionValid() const;
@@ -47,4 +52,7 @@ private:
 	
 	UPROPERTY()
 	FString PlayerNickName;
+	
+	UPROPERTY()
+	TObjectPtr<const UPA_CharacterDefinition> CharacterDefinition;
 };

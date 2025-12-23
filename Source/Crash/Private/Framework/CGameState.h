@@ -7,6 +7,7 @@
 #include "Player/PlayerInfoTypes.h"
 #include "CGameState.generated.h"
 
+class UPA_CharacterDefinition;
 /**
  * 
  */
@@ -21,12 +22,18 @@ public:
 	
 	void RequestPlayerSelectionChange(const APlayerState* RequestingPlayer, uint8 DesiredSlot);
 	
+	void SetCharacterSelected(const APlayerState* SelectingPlayer, const UPA_CharacterDefinition* SelectedDefinition);
+	
+	void SetCharacterDeselected(const UPA_CharacterDefinition* DefinitionToDeselect);
+	
 	/** 
 	 * Returns whether the game can proceed to the hero selection. 
 	 */
 	bool CanStartHeroSelection() const;
 	
 	bool IsSlotOccupied(uint8 SlotID) const;
+	
+	bool IsDefinitionSelected(const UPA_CharacterDefinition* Definition) const;
 	
 	const TArray<FPlayerSelection>& GetPlayerSelectionArray() const;
 	
