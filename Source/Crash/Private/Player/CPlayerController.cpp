@@ -4,6 +4,7 @@
 #include "CPlayerController.h"
 
 #include "CPlayerCharacter.h"
+#include "Widgets/GameplayWidget.h"
 
 void ACPlayerController::OnPossess(APawn* InPawn)
 {
@@ -21,4 +22,24 @@ void ACPlayerController::AcknowledgePossession(APawn* InPawn)
 	CPlayerCharacter = Cast<ACPlayerCharacter>(InPawn);
 	if (!IsValid(CPlayerCharacter)) return;
 	CPlayerCharacter->ClientSideInit();
+	
+	// This also executes for the listen server as well.
+	
+	SpawnGameplayWidget();
+}
+
+void ACPlayerController::SpawnGameplayWidget()
+{
+	check(GameplayWidgetClass);
+	
+	// Spawn the widget if we are on a local machine.
+	
+	if (!IsLocalPlayerController()) return;
+	
+	GameplayWidget = CreateWidget<UGameplayWidget>(this, GameplayWidgetClass);
+	
+	if (GameplayWidget)
+	{
+		GameplayWidget->AddToViewport();
+	}
 }

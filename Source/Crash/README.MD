@@ -45,6 +45,10 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 
 > GE_FullStat uses the Attribute Based magnitude calculation to set its health and mana to the max counterparts.
 
+## 25. Add the Gameplay Widget Blueprint
+
+> Due to `APlayerController::AcknowledgePossession` being called on the server as well in listen server scenarios, spawning the gameplay widget there means that if left unchecked the listen server will try to create it for the other player controllers as well. To avoid this we check if  `IsLocalPlayerController()`. 
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
