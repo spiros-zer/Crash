@@ -6,7 +6,6 @@
 #include "AbilitySystemComponent.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-#include "ProfilingDebugging/CookStats.h"
 
 void UValueGauge::NativePreConstruct()
 {
@@ -52,7 +51,7 @@ void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 	
 	CachedValue = NewValue;
 	
-	CachedMaxValue = CachedMaxValue;
+	CachedMaxValue = NewMaxValue;
 	
 	const float Percent = NewValue / NewMaxValue;
 	
