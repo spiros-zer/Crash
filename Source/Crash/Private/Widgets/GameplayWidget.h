@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "GameplayWidget.generated.h"
 
+class UAbilitySystemComponent;
 class UValueGauge;
 /**
  * 
@@ -17,9 +18,16 @@ class CRASH_API UGameplayWidget : public UUserWidget
 	
 protected:
 	
+	virtual void NativeOnInitialized() override;
+	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UValueGauge> HealthBar;
 	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UValueGauge> ManaBar;
+	
+private:
+	
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 };
