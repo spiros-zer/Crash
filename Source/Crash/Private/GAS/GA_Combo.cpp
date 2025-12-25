@@ -8,7 +8,10 @@
 
 UGA_Combo::UGA_Combo()
 {
-	AbilityTags.AddTag(Ability::BasicAttack);
+	FGameplayTagContainer Container;
+	Container.AddTag(Ability::BasicAttack);
+	
+	SetAssetTags(Container);
 	
 	BlockAbilitiesWithTag.AddTag(Ability::BasicAttack);
 }

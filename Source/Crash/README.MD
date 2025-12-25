@@ -79,6 +79,10 @@ In C++, aside from `UAbilitySystemComponent::PressInputID` there are also `UAbil
 
 Also note that `LogAbilitySystem: Warning: AbilityLocalInputPressed: Default__BP_GA_Combo_Crunch_C is InstancedPerExecution. This is unreliable for Input as you may only interact with the latest spawned Instance`.
 
+## 36. Create the Send Gameplay Event Animation Notify
+
+Overriding a `UFUNCTION(BlueprintNativeEvent)` is possible by overriding its counterpart in the .generated file.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
