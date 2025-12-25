@@ -34,12 +34,31 @@ private:
 	
 	void ConfigureOverheadStatusWidget();
 	
-	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
-	TObjectPtr<UWidgetComponent> OverheadWidgetComponent;
+	/** 
+	 * Called to update the OverheadStatusGauge's visibility.
+	 */
+	void UpdateOverheadStatusGaugeVisibility();
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
 	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;
 	
 	UPROPERTY()
 	TObjectPtr<UCAttributeSet> CAttributeSet;
+	
+	UPROPERTY(VisibleDefaultsOnly, Category = "UI")
+	TObjectPtr<UWidgetComponent> OverheadWidgetComponent;
+	
+	/** 
+	 * The rate with which updates to the OverheadStatusGauge will be performed.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatusGaugeVisibilityCheckUpdateGap = 1.f;
+	
+	/** 
+	 * The square of the distance until which the OverheadStatusGauge will be visible.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatusGaugeVisibilityRangeSquared = 10000000.f;
+	
+	FTimerHandle OverheadStatusGaugeVisibilityTimerHandle;
 };

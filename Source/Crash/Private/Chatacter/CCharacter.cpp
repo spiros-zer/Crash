@@ -6,6 +6,7 @@
 #include "Components/WidgetComponent.h"
 #include "GAS/CAbilitySystemComponent.h"
 #include "GAS/CAttributeSet.h"
+#include "Kismet/GameplayStatics.h"
 #include "Widgets/OverheadStatusGauge.h"
 
 
@@ -78,5 +79,19 @@ void ACCharacter::ConfigureOverheadStatusWidget()
 	check(OverheadStatusGauge);
 	
 	OverheadStatusGauge->ConfigureWithAsc(GetAbilitySystemComponent());
+	
+	// Setup the OverheadStatusGauge visibility timer.
+	
+	GetWorldTimerManager().ClearTimer(OverheadStatusGaugeVisibilityTimerHandle);
+	GetWorldTimerManager().SetTimer(OverheadStatusGaugeVisibilityTimerHandle, this, &ThisClass::UpdateOverheadStatusGaugeVisibility, OverheadStatusGaugeVisibilityCheckUpdateGap, true);
 }
 
+void ACCharacter::UpdateOverheadStatusGaugeVisibility()
+{
+	APawn* LocalPlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	if (!IsValid(LocalPlayerPawn)) return;
+	
+	float DistSquared = FVector::DistSquared(GetActorLocation(), LocalPlayerPawn->GetActorLocation());
+	
+	OverheadWidgetComponent->SetHiddenInGame(DistSquared >= OverheadStatusGaugeVisibilityRangeSquared);
+}
