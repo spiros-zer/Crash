@@ -55,6 +55,10 @@ Locally controlled characters will have a Player Controller associated with them
 
 `ACharacter::PossessedBy` is only called on server, so if the controller that possessed the character is AI perform server side initializations. 
 
+## 30. Add the Base Ability Class and the Combo Ability
+
+> Abilities of level 0 are not learned yet.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

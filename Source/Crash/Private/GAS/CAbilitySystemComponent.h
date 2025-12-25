@@ -17,8 +17,25 @@ public:
 
 	void ApplyInitialEffects();
 	
+	/** 
+	 * Gives the ASC the abilities of a character.
+	 */
+	void GiveInitialAbilities();
+	
 private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
+
+	/** 
+	 * Unique character abilities, that the character has to learn in order to perform.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "GameplayAbilites")
+	TArray<TSubclassOf<UGameplayAbility>> Abilities;
+	
+	/** 
+	 * Abilities already learnt by default.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "GameplayAbilites")
+	TArray<TSubclassOf<UGameplayAbility>> BasicAbilities;
 };
