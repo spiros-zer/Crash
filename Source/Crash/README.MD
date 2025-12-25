@@ -59,6 +59,14 @@ Locally controlled characters will have a Player Controller associated with them
 
 > Abilities of level 0 are not learned yet.
 
+## 31. Add the Animation Montage Play for the Combo Ability
+
+Ability tasks are ending and garbage collected when the ability ends by default.
+
+`K2_` variants of the `UGameplayAbility` member functions can be used instead of their counterparts for ease.
+
+> By wrapping the `UAbilityTask_PlayMontageAndWait` in `HasAuthorityOrPredictionKey` we allow either the server or the owner of the ability with the prediction key to execute this task to not wait server's replication. This local execution is the prediction happening, and when the replication from the server comes back, the data will be synchronized. These predictions must _only_ happen on cosmetic stuff and even then os things you can get away with.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
