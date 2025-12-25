@@ -3,6 +3,7 @@
 
 #include "CPlayerState.h"
 
+#include "Chatacter/CCharacter.h"
 #include "Chatacter/PA_CharacterDefinition.h"
 #include "Framework/CGameState.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,6 +25,15 @@ void ACPlayerState::BeginPlay()
 	CGameState = Cast<ACGameState>(UGameplayStatics::GetGameState(this));
 	if(!IsValid(CGameState)) return;
 	CGameState->OnPlayerSelectionUpdated.AddUObject(this, &ThisClass::PlayerSelectionUpdated);
+}
+
+void ACPlayerState::CopyProperties(APlayerState* PlayerState)
+{
+	Super::CopyProperties(PlayerState);
+	
+	ACPlayerState* NewPlayerState = Cast<ACPlayerState>(PlayerState);
+	check(NewPlayerState);
+	NewPlayerState->PlayerSelection = PlayerSelection;
 }
 
 void ACPlayerState::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -56,6 +66,11 @@ void ACPlayerState::Server_SetSelectedCharacterDefinition_Implementation(const U
 bool ACPlayerState::Server_SetSelectedCharacterDefinition_Validate(const UPA_CharacterDefinition* NewDefinition)
 {
 	return true;
+}
+
+TSubclassOf<APawn> ACPlayerState::GetSelectedPawnClass() const
+{
+	return PlayerSelection.GetCharacterDefinition()->LoadCharacterClass();
 }
 
 void ACPlayerState::PlayerSelectionUpdated(const TArray<FPlayerSelection>& NewPlayerSelections)

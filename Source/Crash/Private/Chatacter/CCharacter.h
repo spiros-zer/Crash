@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "CCharacter.generated.h"
 
+class UWidgetComponent;
 class UCAttributeSet;
 class UCAbilitySystemComponent;
 
@@ -19,6 +20,8 @@ public:
 	// Sets default values for this character's properties
 	ACCharacter();
 	
+	virtual void BeginPlay() override;
+	
 	void ServerSideInit();
 	
 	void ClientSideInit();
@@ -26,6 +29,11 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
 private:
+	
+	void ConfigureOverheadStatusWidget();
+	
+	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
+	TObjectPtr<UWidgetComponent> OverheadWidgetComponent;
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
 	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;
