@@ -67,6 +67,14 @@ Ability tasks are ending and garbage collected when the ability ends by default.
 
 > By wrapping the `UAbilityTask_PlayMontageAndWait` in `HasAuthorityOrPredictionKey` we allow either the server or the owner of the ability with the prediction key to execute this task to not wait server's replication. This local execution is the prediction happening, and when the replication from the server comes back, the data will be synchronized. These predictions must _only_ happen on cosmetic stuff and even then os things you can get away with.
 
+## 34. Use an Enum to Represent the Input ID for Given Abilities
+
+In order to match abilities to enhanced input actions, the `InputID` is used. This utilizes integers to trigger input actions. 
+
+> One way to is to create an enum that then is converted to an int and given to the ASC's Press Input ID.
+ 
+Also note that `LogAbilitySystem: Warning: AbilityLocalInputPressed: Default__BP_GA_Combo_Crunch_C is InstancedPerExecution. This is unreliable for Input as you may only interact with the latest spawned Instance`.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

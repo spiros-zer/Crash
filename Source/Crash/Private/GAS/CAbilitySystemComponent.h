@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "CGameplayAbilityTypes.h"
 
 #include "CAbilitySystemComponent.generated.h"
 
@@ -31,11 +32,11 @@ private:
 	 * Unique character abilities, that the character has to learn in order to perform.
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayAbilites")
-	TArray<TSubclassOf<UGameplayAbility>> Abilities;
+	TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>> Abilities;
 	
 	/** 
 	 * Abilities already learnt by default.
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayAbilites")
-	TArray<TSubclassOf<UGameplayAbility>> BasicAbilities;
+	TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>> BasicAbilities;
 };
