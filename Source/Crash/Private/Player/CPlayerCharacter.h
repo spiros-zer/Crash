@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Crash/Private/Chatacter/CCharacter.h"
+#include "GAS/CGameplayAbilityTypes.h"
 #include "CPlayerCharacter.generated.h"
 
 struct FInputActionValue;
@@ -22,7 +23,7 @@ public:
 	ACPlayerCharacter();
 	
 	virtual void PawnClientRestart() override;
-	
+
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 private:
@@ -47,11 +48,16 @@ private:
 	 */
 	FVector GetMoveFwdDir() const;
 	
+	void HandleAbilityInput(const FInputActionValue& InputActionValue, ECAbilityInputID InputID);
+	
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	TObjectPtr<UCameraComponent> ViewCamera;
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "View")
 	TObjectPtr<USpringArmComponent> CameraBoom;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TMap<ECAbilityInputID, TObjectPtr<UInputAction>> GameplayAbilityInputActions;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> JumpInputAction;

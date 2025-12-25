@@ -1,6 +1,6 @@
 ## 7. Add the Jump Input Action
 
-Use `PawnClientRestart` reccomended place to register input mappings. Once htis is triggered it wlll be the first time the player exists on client.
+Use `PawnClientRestart` recommended place to register input mappings. Once htis is triggered it wlll be the first time the player exists on client.
 
 > Before adding an input mapping it's best to remove it first.
 
@@ -20,7 +20,7 @@ NativeThreadSafeUpdateAnimation to perform heavy calculations.
 
 ## 11. Add the Speed Attribute to Drive Ground Locomotion
 
-To mark a funciton as thread safe (e.g. for `UAnimInstance::NativeThreadSafeUpdateAnimation` mark it with the meta specifier `meta = (BlueprintThreadSafe)).
+To mark a function as thread safe (e.g. for `UAnimInstance::NativeThreadSafeUpdateAnimation` mark it with the meta specifier `meta = (BlueprintThreadSafe)).
 
 Use Synchronization Groups to sync animations that don't match and/or have different paces.
 
@@ -72,7 +72,11 @@ Ability tasks are ending and garbage collected when the ability ends by default.
 In order to match abilities to enhanced input actions, the `InputID` is used. This utilizes integers to trigger input actions. 
 
 > One way to is to create an enum that then is converted to an int and given to the ASC's Press Input ID.
- 
+
+## 35. Add Input Action Binding for Abilities in the Player Character Class
+
+In C++, aside from `UAbilitySystemComponent::PressInputID` there are also `UAbilitySystemComponent::AbilityLocalInputPressed` and `UAbilitySystemComponent::AbilityLocalInputReleased` which can trigger the ability, but also cancel it.
+
 Also note that `LogAbilitySystem: Warning: AbilityLocalInputPressed: Default__BP_GA_Combo_Crunch_C is InstancedPerExecution. This is unreliable for Input as you may only interact with the latest spawned Instance`.
 
 ## 221. Create the Lobby Level and Spawn the Lobby Widget

@@ -3,6 +3,7 @@
 
 #include "CPlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
@@ -50,6 +51,11 @@ void ACPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Triggered, this, &ThisClass::Jump);
 	EnhancedInputComponent->BindAction(LookInputAction, ETriggerEvent::Triggered, this, &ThisClass::HandleLookInput);
 	EnhancedInputComponent->BindAction(MoveInputAction, ETriggerEvent::Triggered, this, &ThisClass::HandleMoveInput);
+
+	for (const TPair<ECAbilityInputID, TObjectPtr<UInputAction>>& InputActionPair : GameplayAbilityInputActions)
+	{
+		EnhancedInputComponent->BindAction(InputActionPair.Value, ETriggerEvent::Triggered, this, &ThisClass::HandleAbilityInput, InputActionPair.Key);
+	}
 }
 
 void ACPlayerCharacter::HandleLookInput(const FInputActionValue& InputActionValue)
@@ -82,4 +88,17 @@ FVector ACPlayerCharacter::GetLookFwdDir() const
 FVector ACPlayerCharacter::GetMoveFwdDir() const
 {
 	return FVector::CrossProduct(GetLookRightDir(), FVector::UpVector);
+}
+
+void ACPlayerCharacter::HandleAbilityInput(const FInputActionValue& InputActionValue, ECAbilityInputID InputID)
+{
+	bool bIsPressed = InputActionValue.Get<bool>();
+	if (bIsPressed)
+	{
+		GetAbilitySystemComponent()->AbilityLocalInputPressed(static_cast<uint32>(InputID));
+	}
+	else
+	{
+		GetAbilitySystemComponent()->AbilityLocalInputReleased(static_cast<uint32>(InputID));
+	}
 }
