@@ -49,6 +49,12 @@ Gameplay Effects are like configurations. They are specified from BPs and then t
 
 > Due to `APlayerController::AcknowledgePossession` being called on the server as well in listen server scenarios, spawning the gameplay widget there means that if left unchecked the listen server will try to create it for the other player controllers as well. To avoid this we check if  `IsLocalPlayerController()`. 
 
+## 28. Make the Over Head Widget Display Hidden for Local Player Character
+
+Locally controlled characters will have a Player Controller associated with them. This is usually one character (unless there is split-screen) in clients, but not in the case of listen servers. There all the player controllers and characters are present. Using `ACharacter::IsLocallyControlled` solves this.
+
+`ACharacter::PossessedBy` is only called on server, so if the controller that possessed the character is AI perform server side initializations. 
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

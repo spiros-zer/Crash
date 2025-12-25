@@ -9,10 +9,8 @@
 #include "Widgets/OverheadStatusGauge.h"
 
 
-// Sets default values
 ACCharacter::ACCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -35,6 +33,20 @@ void ACCharacter::BeginPlay()
 	ConfigureOverheadStatusWidget();
 }
 
+void ACCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	
+	// Called only on server.
+	
+	// Server side init for AIControllers.
+	
+	if (NewController && !NewController->IsPlayerController())
+	{
+		ServerSideInit();
+	}
+}
+
 void ACCharacter::ServerSideInit()
 {
 	CAbilitySystemComponent->InitAbilityActorInfo(this, this);
@@ -53,6 +65,15 @@ UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 
 void ACCharacter::ConfigureOverheadStatusWidget()
 {
+	// Don't show the widget component for own player's character
+	
+	if (IsLocallyControlled())
+	{
+		OverheadWidgetComponent->SetHiddenInGame(true);
+		
+		return;
+	}
+	
 	UOverheadStatusGauge* OverheadStatusGauge = Cast<UOverheadStatusGauge>(OverheadWidgetComponent->GetUserWidgetObject());
 	check(OverheadStatusGauge);
 	

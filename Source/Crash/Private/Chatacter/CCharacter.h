@@ -22,6 +22,8 @@ public:
 	
 	virtual void BeginPlay() override;
 	
+	virtual void PossessedBy(AController* NewController) override;
+	
 	void ServerSideInit();
 	
 	void ClientSideInit();
