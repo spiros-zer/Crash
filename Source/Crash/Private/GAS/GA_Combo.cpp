@@ -3,7 +3,15 @@
 
 #include "GA_Combo.h"
 
+#include "CTags.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
+
+UGA_Combo::UGA_Combo()
+{
+	AbilityTags.AddTag(Ability::BasicAttack);
+	
+	BlockAbilitiesWithTag.AddTag(Ability::BasicAttack);
+}
 
 void UGA_Combo::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {

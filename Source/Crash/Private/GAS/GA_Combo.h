@@ -16,6 +16,8 @@ class CRASH_API UGA_Combo : public UCGameplayAbility
 	
 public:
 	
+	UGA_Combo();
+	
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 	
 protected:
