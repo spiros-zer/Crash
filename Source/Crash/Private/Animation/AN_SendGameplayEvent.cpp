@@ -33,5 +33,4 @@ FString UAN_SendGameplayEvent::GetNotifyName_Implementation() const
 	UGameplayTagsManager::Get().SplitGameplayTagFName(EventTag, TagNames);
 	
 	return TagNames.Last().ToString();
-	
 }

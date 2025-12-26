@@ -83,6 +83,10 @@ Also note that `LogAbilitySystem: Warning: AbilityLocalInputPressed: Default__BP
 
 Overriding a `UFUNCTION(BlueprintNativeEvent)` is possible by overriding its counterpart in the .generated file.
 
+## 37. Handle the Combo Change Event in the Combo Ability
+
+Animation notifies can be triggered in later moments from where they were supposed to. That is usually okay for cosmetic, but for mission-critical ones (like combos) they need to be precise at the point they are triggered. To solve this, in the Details panel for the anim notify, in Category set `Montage Tick Type` to `Branching Point`.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

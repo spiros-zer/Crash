@@ -11,9 +11,8 @@ namespace Ability
 
 	namespace Combo
 	{
-		namespace Change
-		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Combo02);
-		}
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Change);
+		
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(End);
 	}
 }
