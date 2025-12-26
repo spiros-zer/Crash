@@ -5,6 +5,7 @@
 
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "Abilities/Tasks/AbilityTask_WaitInputPress.h"
 #include "CTags.h"
 
 UGA_Combo::UGA_Combo()
@@ -45,6 +46,8 @@ void UGA_Combo::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 		WaitComboEndEventTask->EventReceived.AddUniqueDynamic(this, &ThisClass::ComboEndedEventReceived);
 		WaitComboEndEventTask->ReadyForActivation();
 	}
+	
+	SetupWaitComboInputPress();
 }
 
 void UGA_Combo::ComboChangedEventReceived(FGameplayEventData Payload)
@@ -67,4 +70,32 @@ void UGA_Combo::ComboEndedEventReceived(FGameplayEventData Payload)
 	NextComboName = NAME_None;
 		
 	UE_LOG(LogTemp, Warning, TEXT("Combo opportunity missed."));
+}
+
+void UGA_Combo::SetupWaitComboInputPress()
+{
+	UAbilityTask_WaitInputPress* WaitInputPress = UAbilityTask_WaitInputPress::WaitInputPress(this);
+	WaitInputPress->OnPress.AddUniqueDynamic(this, &ThisClass::HandleInputPressed);
+	WaitInputPress->ReadyForActivation();
+}
+
+void UGA_Combo::HandleInputPressed(float TimeWaited)
+{
+	// Listen for inputs as soon as this one is handled
+	
+	SetupWaitComboInputPress();
+	
+	TryCommitCombo();
+}
+
+void UGA_Combo::TryCommitCombo()
+{
+	if (NextComboName.IsEqual(NAME_None))
+	{
+		return;
+	}
+	
+	UAnimInstance* OwnerAnimInstance = GetOwnerAnimInstance();
+	if (!IsValid(OwnerAnimInstance)) return;
+	OwnerAnimInstance->Montage_SetNextSection(OwnerAnimInstance->Montage_GetCurrentSection(), NextComboName);
 }

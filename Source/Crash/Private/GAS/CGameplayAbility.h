@@ -13,4 +13,8 @@ UCLASS()
 class CRASH_API UCGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
+	
+protected:
+	
+	TObjectPtr<UAnimInstance> GetOwnerAnimInstance() const;
 };

@@ -18,9 +18,14 @@ public:
 	
 	UGA_Combo();
 
-		virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
+	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 	
 protected:
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	TObjectPtr<UAnimMontage> ComboMontage;
+	
+private:
 	
 	UFUNCTION()
 	void ComboChangedEventReceived(FGameplayEventData Payload);
@@ -28,8 +33,12 @@ protected:
 	UFUNCTION()
 	void ComboEndedEventReceived(FGameplayEventData Payload);
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Animation")
-	TObjectPtr<UAnimMontage> ComboMontage;
+	void SetupWaitComboInputPress();
+	
+	UFUNCTION()
+	void HandleInputPressed(float TimeWaited);
+	
+	void TryCommitCombo();
 	
 	FName NextComboName;
 };
