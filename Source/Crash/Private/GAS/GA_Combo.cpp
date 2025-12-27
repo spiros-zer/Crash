@@ -3,9 +3,11 @@
 
 #include "GA_Combo.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
 #include "Abilities/Tasks/AbilityTask_WaitInputPress.h"
+#include "GameplayEffect.h"
 #include "CTags.h"
 
 UGA_Combo::UGA_Combo()
@@ -110,4 +112,32 @@ void UGA_Combo::TryCommitCombo()
 void UGA_Combo::DoDamage(FGameplayEventData Data)
 {
 	TArray<FHitResult> HitResults = GetHitResultFromSweepLocationTargetData(Data.TargetData, 30.f, true, true);
+	
+	for (const FHitResult& HitResult : HitResults)
+	{
+		const TSubclassOf<UGameplayEffect> GameplayEffect = GetDamageEffectForCurrentCombo();
+		
+		const float Level = GetAbilityLevel(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo());
+
+		const FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(GameplayEffect, Level);
+		
+		ApplyGameplayEffectSpecToTarget(GetCurrentAbilitySpecHandle(), CurrentActorInfo, CurrentActivationInfo, EffectSpecHandle, UAbilitySystemBlueprintLibrary::AbilityTargetDataFromActor(HitResult.GetActor()));
+	}
+}
+
+TSubclassOf<UGameplayEffect> UGA_Combo::GetDamageEffectForCurrentCombo() const
+{
+	const UAnimInstance* OwnerAnimInstance = GetOwnerAnimInstance();
+	if (!IsValid(OwnerAnimInstance)) return nullptr;
+	
+	const FName CurrentComboName = OwnerAnimInstance->Montage_GetCurrentSection(ComboMontage);
+	
+	const TSubclassOf<UGameplayEffect>* FoundEffectPtr = DamageEffectMap.Find(CurrentComboName);
+	
+	if (!IsValid(*FoundEffectPtr))
+	{
+		return DefaultDamageEffect;
+	}
+	
+	return *FoundEffectPtr;
 }

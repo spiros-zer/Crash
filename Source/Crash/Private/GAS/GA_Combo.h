@@ -25,6 +25,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	TObjectPtr<UAnimMontage> ComboMontage;
 	
+	/** 
+	 * Maps the combo names as defined by their anim montage sections to gameplay effects.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay Effect")
+	TMap<FName, TSubclassOf<UGameplayEffect>> DamageEffectMap;
+	
+	/** 
+	 * Default gameplay effect to use if none is found.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay Effect")
+	TSubclassOf<UGameplayEffect> DefaultDamageEffect;
+	
 private:
 	
 	UFUNCTION()
@@ -46,6 +58,8 @@ private:
 	 */
 	UFUNCTION()
 	void DoDamage(FGameplayEventData Data);
+	
+	TSubclassOf<UGameplayEffect> GetDamageEffectForCurrentCombo() const;
 	
 	FName NextComboName;
 };
