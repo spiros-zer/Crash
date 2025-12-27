@@ -16,3 +16,14 @@ namespace Ability
 		UE_DEFINE_GAMEPLAY_TAG(End, "Ability.Combo.End");
 	}
 }
+
+namespace GameplayCue
+{
+	namespace Hit
+	{
+		namespace Crunch
+		{
+			UE_DEFINE_GAMEPLAY_TAG(Punch, "GameplayCue.Hit.Crunch.Punch");
+		}
+	}
+}

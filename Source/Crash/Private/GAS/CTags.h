@@ -18,3 +18,14 @@ namespace Ability
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(End);
 	}
 }
+
+namespace GameplayCue
+{
+	namespace Hit
+	{
+		namespace Crunch
+		{
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Punch);
+		}
+	}
+}
