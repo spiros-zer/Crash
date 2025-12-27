@@ -87,6 +87,14 @@ Overriding a `UFUNCTION(BlueprintNativeEvent)` is possible by overriding its cou
 
 Animation notifies can be triggered in later moments from where they were supposed to. That is usually okay for cosmetic, but for mission-critical ones (like combos) they need to be precise at the point they are triggered. To solve this, in the Details panel for the anim notify, in Category set `Montage Tick Type` to `Branching Point`.
 
+## 40. Create the Animation Notify to Send Sweep Location Data in a Gameplay Event
+
+In order to send location data through `FGameplayEventData`, `FGameplayAbilityTargetData_LocationInfo` simplifies stuff. In order to set it up properly `new` has to be used when creating the pointer. This is because, when added to the `FGameplayEventData::Data` it is converted to a shared pointer. _If a smart pointer is used instead, it will crash because two smart pointers will point to the same thing, which isn't allowed by the reference manager._
+
+As per the comment in `FGameplayAbilityTargetDataHandle::Add`: Adds a new target data to handle, it must have been created with new
+
+```
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
