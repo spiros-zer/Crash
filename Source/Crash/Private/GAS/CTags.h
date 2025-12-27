@@ -21,8 +21,12 @@ namespace Ability
 
 namespace GameplayCue
 {
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(CameraShake);
+	
 	namespace Hit
 	{
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Reaction);
+		
 		namespace Crunch
 		{
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Punch);

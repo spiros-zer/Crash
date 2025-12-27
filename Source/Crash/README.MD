@@ -109,6 +109,12 @@ In a static gameplay cue:
 - `While Active` is used for operations while the cue is active.
 - `Executed` is for one-off cues.
 
+## 47. Add Camera Shake and Hit Reaction Animation
+
+In order for the anim montages to not interact with one-another slotting them in different groups allows for playing them simultaneously.
+
+> Especially useful for hit-react interactions.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

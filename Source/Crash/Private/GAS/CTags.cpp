@@ -19,8 +19,12 @@ namespace Ability
 
 namespace GameplayCue
 {
+	UE_DEFINE_GAMEPLAY_TAG(CameraShake, "GameplayCue.CameraShake");
+	
 	namespace Hit
 	{
+		UE_DEFINE_GAMEPLAY_TAG(Reaction, "GameplayCue.Hit.Reaction");
+		
 		namespace Crunch
 		{
 			UE_DEFINE_GAMEPLAY_TAG(Punch, "GameplayCue.Hit.Crunch.Punch");
