@@ -52,6 +52,9 @@ private:
 	
 	void TryCommitCombo();
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Targetting")
+	float TargetSweepSphere = 30.f;
+	
 	/** 
 	 * Called on Ability::Combo::Damage gameplay event received.
 	 * @param Data Contains the locations for the sweep.
