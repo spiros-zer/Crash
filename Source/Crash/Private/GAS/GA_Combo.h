@@ -40,5 +40,12 @@ private:
 	
 	void TryCommitCombo();
 	
+	/** 
+	 * Called on Ability::Combo::Damage gameplay event received.
+	 * @param Data Contains the locations for the sweep.
+	 */
+	UFUNCTION()
+	void DoDamage(FGameplayEventData Data);
+	
 	FName NextComboName;
 };

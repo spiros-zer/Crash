@@ -47,6 +47,13 @@ void UGA_Combo::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const F
 		WaitComboEndEventTask->ReadyForActivation();
 	}
 	
+	if (K2_HasAuthority())
+	{
+		UAbilityTask_WaitGameplayEvent* WaitTargetEventTask = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, Ability::Combo::Damage);
+		WaitTargetEventTask->EventReceived.AddUniqueDynamic(this, &ThisClass::DoDamage);
+		WaitTargetEventTask->ReadyForActivation();
+	}
+	
 	SetupWaitComboInputPress();
 }
 
@@ -98,4 +105,9 @@ void UGA_Combo::TryCommitCombo()
 	UAnimInstance* OwnerAnimInstance = GetOwnerAnimInstance();
 	if (!IsValid(OwnerAnimInstance)) return;
 	OwnerAnimInstance->Montage_SetNextSection(OwnerAnimInstance->Montage_GetCurrentSection(), NextComboName);
+}
+
+void UGA_Combo::DoDamage(FGameplayEventData Data)
+{
+	TArray<FHitResult> HitResults = GetHitResultFromSweepLocationTargetData(Data.TargetData, 30.f, true, true);
 }
