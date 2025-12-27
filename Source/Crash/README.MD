@@ -93,7 +93,9 @@ In order to send location data through `FGameplayEventData`, `FGameplayAbilityTa
 
 As per the comment in `FGameplayAbilityTargetDataHandle::Add`: Adds a new target data to handle, it must have been created with new
 
-```
+## 41. Define the Target Sockets and Configure the Target Notifies
+
+Branching points in animation montages have to be on different frames or else they won't fire.
 
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 

@@ -11,6 +11,8 @@ namespace Ability
 	{
 		UE_DEFINE_GAMEPLAY_TAG(Change, "Ability.Combo.Change");
 		
+		UE_DEFINE_GAMEPLAY_TAG(Damage, "Ability.Combo.Damage");
+		
 		UE_DEFINE_GAMEPLAY_TAG(End, "Ability.Combo.End");
 	}
 }

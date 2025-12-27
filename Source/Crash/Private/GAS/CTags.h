@@ -13,6 +13,8 @@ namespace Ability
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Change);
 		
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage);
+		
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(End);
 	}
 }
