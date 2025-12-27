@@ -97,6 +97,10 @@ As per the comment in `FGameplayAbilityTargetDataHandle::Add`: Adds a new target
 
 Branching points in animation montages have to be on different frames or else they won't fire.
 
+## 44. Clamp the Attributes
+
+Clamping the values is needed in two places. `UAttributeSet::PreAttributeChange` is called when the helper macro functions change the attribute and is made to perform an initial clamping. But, gameplay effects could have calculations happening without triggering this function (like gameplay effect Executions). `UAttributeSet::PostGameplayEffectExecute` is the place to clamp.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

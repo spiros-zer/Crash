@@ -30,6 +30,10 @@ public:
 	ATTRIBUTE_ACCESSORS(ThisClass, Mana)
 	ATTRIBUTE_ACCESSORS(ThisClass, MaxMana)
 	
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+	
 private:
 	
 	UFUNCTION()
