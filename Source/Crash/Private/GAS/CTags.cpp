@@ -31,3 +31,8 @@ namespace GameplayCue
 		}
 	}
 }
+
+namespace Stats
+{
+	UE_DEFINE_GAMEPLAY_TAG(Dead, "Stats.Dead");
+}

@@ -16,6 +16,8 @@ class CRASH_API UCAbilitySystemComponent : public UAbilitySystemComponent
 	
 public:
 
+	UCAbilitySystemComponent();
+
 	void ApplyInitialEffects();
 	
 	/** 
@@ -25,9 +27,17 @@ public:
 	
 private:
 	
+	/** 
+	 * Called when health attributes changes.
+	 */
+	void HealthUpdated(const FOnAttributeChangeData& OnAttributeChangeData);
+	
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
 
+	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
+	TSubclassOf<UGameplayEffect> DeathEffect;
+	
 	/** 
 	 * Unique character abilities, that the character has to learn in order to perform.
 	 */

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/Character.h"
 #include "CCharacter.generated.h"
 
@@ -38,6 +39,14 @@ private:
 	 * Called to update the OverheadStatusGauge's visibility.
 	 */
 	void UpdateOverheadStatusGaugeVisibility();
+
+	void BindGASChangeDelegates();
+	
+	void DeathTagUpdated(FGameplayTag GameplayTag, int NewCount);
+	
+	void StartDeathSequence();
+	
+	void Respawn();
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
 	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;

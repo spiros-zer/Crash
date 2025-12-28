@@ -115,6 +115,12 @@ In order for the anim montages to not interact with one-another slotting them in
 
 > Especially useful for hit-react interactions.
 
+## 48. Add Death Signal With durational Gameplay Effect and Death Tag
+
+A death state can be achieved using gameplay effects. Destroying, respawning and re-setting everything on the pawn isn't ideal in any scenario. This also takes care of any replication.
+
+> A duration gameplay effect that lasts as long as the respawn time.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

@@ -3,6 +3,13 @@
 
 #include "CAbilitySystemComponent.h"
 
+#include "CAttributeSet.h"
+
+UCAbilitySystemComponent::UCAbilitySystemComponent()
+{
+	GetGameplayAttributeValueChangeDelegate(UCAttributeSet::GetHealthAttribute()).AddUObject(this, &ThisClass::HealthUpdated);
+}
+
 void UCAbilitySystemComponent::ApplyInitialEffects()
 {
 	if (!GetOwner()->HasAuthority()) return;
@@ -31,5 +38,21 @@ void UCAbilitySystemComponent::GiveInitialAbilities()
 	for (const TPair<ECAbilityInputID, TSubclassOf<UGameplayAbility>>& AbilityPair : BasicAbilities)
 	{
 		GiveAbility(FGameplayAbilitySpec(AbilityPair.Value, 1, static_cast<int32>(AbilityPair.Key), nullptr));
+	}
+}
+
+void UCAbilitySystemComponent::HealthUpdated(const FOnAttributeChangeData& OnAttributeChangeData)
+{
+	check(DeathEffect);
+	
+	AActor* Owner = GetOwner();
+	if (!IsValid(Owner)) return;
+	if (!Owner->HasAuthority()) return;
+	
+	if (OnAttributeChangeData.NewValue <= 0)
+	{
+		const FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingSpec(DeathEffect, 1.f, MakeEffectContext());
+		
+		ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 	}
 }

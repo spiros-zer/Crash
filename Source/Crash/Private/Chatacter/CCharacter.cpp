@@ -6,6 +6,7 @@
 #include "Components/WidgetComponent.h"
 #include "GAS/CAbilitySystemComponent.h"
 #include "GAS/CAttributeSet.h"
+#include "GAS/CTags.h"
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/OverheadStatusGauge.h"
 
@@ -95,4 +96,31 @@ void ACCharacter::UpdateOverheadStatusGaugeVisibility()
 	float DistSquared = FVector::DistSquared(GetActorLocation(), LocalPlayerPawn->GetActorLocation());
 	
 	OverheadWidgetComponent->SetHiddenInGame(DistSquared >= OverheadStatusGaugeVisibilityRangeSquared);
+}
+
+void ACCharacter::BindGASChangeDelegates()
+{
+	if (!IsValid(CAbilitySystemComponent)) return;
+	
+	CAbilitySystemComponent->RegisterGameplayTagEvent(Stats::Dead).AddUObject(this, &ThisClass::DeathTagUpdated);
+}
+
+void ACCharacter::DeathTagUpdated(FGameplayTag GameplayTag, int NewCount)
+{
+	if (NewCount != 0)
+	{
+		StartDeathSequence();
+	}
+	else
+	{
+		Respawn();
+	}
+}
+
+void ACCharacter::StartDeathSequence()
+{
+}
+
+void ACCharacter::Respawn()
+{
 }
