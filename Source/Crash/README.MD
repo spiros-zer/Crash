@@ -140,6 +140,10 @@ Utilizing the start spot, we can assign a spawn spot to a player and spawn them 
 
 > StartSpot is only server side as it isn't replicated to the client.
 
+## 58. Add AI and Configure the AI TeamID and Sight Perception
+
+`AIController` already implements the `IGenericTeamAgentInterface`
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
