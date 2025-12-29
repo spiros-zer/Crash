@@ -25,18 +25,18 @@ public:
 	 */
 	void GiveInitialAbilities();
 	
-private:
+	void ApplyFullStatEffect();
 	
-	/** 
-	 * Called when health attributes changes.
-	 */
-	void HealthUpdated(const FOnAttributeChangeData& OnAttributeChangeData);
+protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
 	TSubclassOf<UGameplayEffect> DeathEffect;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "GameplayEffect")
+	TSubclassOf<UGameplayEffect> FullStatEffect;
 	
 	/** 
 	 * Unique character abilities, that the character has to learn in order to perform.
@@ -49,4 +49,13 @@ private:
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "GameplayAbilites")
 	TMap<ECAbilityInputID, TSubclassOf<UGameplayAbility>> BasicAbilities;
+	
+private:
+	
+	/** 
+	 * Called when health attributes changes.
+	 */
+	void HealthUpdated(const FOnAttributeChangeData& OnAttributeChangeData);
+	
+	void Server_ApplyGameplayEffect(TSubclassOf<UGameplayEffect> GameplayEffect, int Level = 1);
 };

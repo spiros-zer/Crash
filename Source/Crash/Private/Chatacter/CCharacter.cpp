@@ -17,6 +17,9 @@ ACCharacter::ACCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	
+	
+	// Disabling the collision here might not reflect in the child classes. Make sure this is reflected in BP.
+	
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 	CAbilitySystemComponent = CreateDefaultSubobject<UCAbilitySystemComponent>("CAbilitySystemComponent");
@@ -145,6 +148,19 @@ void ACCharacter::StartDeathSequence()
 void ACCharacter::Respawn()
 {
 	OnRespawn();
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	
+	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	
+	// Since auto blend out is fals for the death anim montage, need to  manually stop it here
+	
+	GetMesh()->GetAnimInstance()->StopAllMontages(0.f);
+	
+	SetStatusGaugeEnabled(true);
+	
+	if (!IsValid(CAbilitySystemComponent)) return;
+	CAbilitySystemComponent->ApplyFullStatEffect();
 }
 
 void ACCharacter::PlayDeathAnimation()

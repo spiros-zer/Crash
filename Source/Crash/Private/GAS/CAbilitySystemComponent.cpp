@@ -41,6 +41,11 @@ void UCAbilitySystemComponent::GiveInitialAbilities()
 	}
 }
 
+void UCAbilitySystemComponent::ApplyFullStatEffect()
+{
+	Server_ApplyGameplayEffect(FullStatEffect);
+}
+
 void UCAbilitySystemComponent::HealthUpdated(const FOnAttributeChangeData& OnAttributeChangeData)
 {
 	check(DeathEffect);
@@ -51,8 +56,17 @@ void UCAbilitySystemComponent::HealthUpdated(const FOnAttributeChangeData& OnAtt
 	
 	if (OnAttributeChangeData.NewValue <= 0)
 	{
-		const FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingSpec(DeathEffect, 1.f, MakeEffectContext());
-		
-		ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+		Server_ApplyGameplayEffect(DeathEffect);
 	}
+}
+
+void UCAbilitySystemComponent::Server_ApplyGameplayEffect(TSubclassOf<UGameplayEffect> GameplayEffect, int Level)
+{
+	const AActor* Owner = GetOwner();
+	if (!IsValid(Owner)) return;
+	if (!Owner->HasAuthority()) return;
+	
+	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingSpec(GameplayEffect, Level, MakeEffectContext());
+		
+	ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 }
