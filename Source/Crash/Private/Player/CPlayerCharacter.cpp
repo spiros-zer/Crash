@@ -58,6 +58,24 @@ void ACPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	}
 }
 
+void ACPlayerCharacter::OnDeath()
+{
+	Super::OnDeath();
+	
+	APlayerController* PlayerController = GetController<APlayerController>();
+	if (!IsValid(PlayerController)) return;
+	PlayerController->DisableInput(PlayerController);
+}
+
+void ACPlayerCharacter::OnRespawn()
+{
+	Super::OnRespawn();
+	
+	APlayerController* PlayerController = GetController<APlayerController>();
+	if (!IsValid(PlayerController)) return;
+	PlayerController->EnableInput(PlayerController);
+}
+
 void ACPlayerCharacter::HandleLookInput(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputValue = InputActionValue.Get<FVector2D>();

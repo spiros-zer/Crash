@@ -25,6 +25,12 @@ public:
 	virtual void PawnClientRestart() override;
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	
+protected:
+	
+	virtual void OnDeath() override;
+	
+	virtual void OnRespawn() override;
 
 private:
 	

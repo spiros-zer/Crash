@@ -18,7 +18,7 @@ class CRASH_API ACCharacter : public ACharacter, public IAbilitySystemInterface
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	
 	ACCharacter();
 	
 	virtual void BeginPlay() override;
@@ -31,6 +31,33 @@ public:
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
+protected:
+	
+	virtual void OnDeath();
+	
+	virtual void OnRespawn();
+	
+	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
+	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;
+	
+	UPROPERTY(VisibleDefaultsOnly, Category = "UI")
+	TObjectPtr<UWidgetComponent> OverheadWidgetComponent;
+	
+	/** 
+	 * The rate with which updates to the OverheadStatusGauge will be performed.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatusGaugeVisibilityCheckUpdateGap = 1.f;
+	
+	/** 
+	 * The square of the distance until which the OverheadStatusGauge will be visible.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float OverheadStatusGaugeVisibilityRangeSquared = 10000000.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Death")
+	TObjectPtr<UAnimMontage> DeathMontage;
+
 private:
 	
 	void ConfigureOverheadStatusWidget();
@@ -48,26 +75,12 @@ private:
 	
 	void Respawn();
 	
-	UPROPERTY(VisibleDefaultsOnly, Category = "AbilitySystem")
-	TObjectPtr<UCAbilitySystemComponent> CAbilitySystemComponent;
+	void PlayDeathAnimation();
+	
+	void SetStatusGaugeEnabled(bool bIsEnabled);
 	
 	UPROPERTY()
 	TObjectPtr<UCAttributeSet> CAttributeSet;
-	
-	UPROPERTY(VisibleDefaultsOnly, Category = "UI")
-	TObjectPtr<UWidgetComponent> OverheadWidgetComponent;
-	
-	/** 
-	 * The rate with which updates to the OverheadStatusGauge will be performed.
-	 */
-	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	float OverheadStatusGaugeVisibilityCheckUpdateGap = 1.f;
-	
-	/** 
-	 * The square of the distance until which the OverheadStatusGauge will be visible.
-	 */
-	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	float OverheadStatusGaugeVisibilityRangeSquared = 10000000.f;
 	
 	FTimerHandle OverheadStatusGaugeVisibilityTimerHandle;
 };

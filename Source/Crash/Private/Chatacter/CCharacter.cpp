@@ -3,7 +3,9 @@
 
 #include "CCharacter.h"
 
+#include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GAS/CAbilitySystemComponent.h"
 #include "GAS/CAttributeSet.h"
 #include "GAS/CTags.h"
@@ -33,6 +35,8 @@ void ACCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	ConfigureOverheadStatusWidget();
+	
+	BindGASChangeDelegates();
 }
 
 void ACCharacter::PossessedBy(AController* NewController)
@@ -64,6 +68,14 @@ void ACCharacter::ClientSideInit()
 UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 {
 	return CAbilitySystemComponent;
+}
+
+void ACCharacter::OnDeath()
+{
+}
+
+void ACCharacter::OnRespawn()
+{
 }
 
 void ACCharacter::ConfigureOverheadStatusWidget()
@@ -119,8 +131,39 @@ void ACCharacter::DeathTagUpdated(FGameplayTag GameplayTag, int NewCount)
 
 void ACCharacter::StartDeathSequence()
 {
+	OnDeath();
+	
+	PlayDeathAnimation();
+	
+	SetStatusGaugeEnabled(false);
+	
+	GetCharacterMovement()->SetMovementMode(MOVE_None);
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void ACCharacter::Respawn()
 {
+	OnRespawn();
+}
+
+void ACCharacter::PlayDeathAnimation()
+{
+	check(DeathMontage);
+	
+	PlayAnimMontage(DeathMontage);
+}
+
+void ACCharacter::SetStatusGaugeEnabled(bool bIsEnabled)
+{
+	GetWorldTimerManager().ClearTimer(OverheadStatusGaugeVisibilityTimerHandle);
+	
+	if (bIsEnabled)
+	{
+		ConfigureOverheadStatusWidget();
+	}
+	else
+	{
+		OverheadWidgetComponent->SetHiddenInGame(true);
+	}
 }
