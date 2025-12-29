@@ -10,6 +10,7 @@
 #include "GAS/CAttributeSet.h"
 #include "GAS/CTags.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 #include "Widgets/OverheadStatusGauge.h"
 
 
@@ -73,6 +74,23 @@ void ACCharacter::ClientSideInit()
 UAbilitySystemComponent* ACCharacter::GetAbilitySystemComponent() const
 {
 	return CAbilitySystemComponent;
+}
+
+void ACCharacter::SetGenericTeamId(const FGenericTeamId& InTeamID)
+{
+	TeamId = InTeamID;
+}
+
+FGenericTeamId ACCharacter::GetGenericTeamId() const
+{
+	return TeamId;
+}
+
+void ACCharacter::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	
+	DOREPLIFETIME(ThisClass, TeamId);
 }
 
 void ACCharacter::OnDeath()

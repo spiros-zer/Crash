@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameplayTagContainer.h"
+#include "GenericTeamAgentInterface.h"
 #include "GameFramework/Character.h"
 #include "CCharacter.generated.h"
 
@@ -13,7 +14,7 @@ class UCAttributeSet;
 class UCAbilitySystemComponent;
 
 UCLASS()
-class CRASH_API ACCharacter : public ACharacter, public IAbilitySystemInterface
+class CRASH_API ACCharacter : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -30,6 +31,12 @@ public:
 	void ClientSideInit();
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	
+	virtual void SetGenericTeamId(const FGenericTeamId& InTeamID) override;
+	
+	virtual FGenericTeamId GetGenericTeamId() const override;
+	
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
 protected:
 	
@@ -103,4 +110,7 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UCAttributeSet> CAttributeSet;
+	
+	UPROPERTY(Replicated)
+	FGenericTeamId TeamId;
 };

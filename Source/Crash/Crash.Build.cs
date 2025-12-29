@@ -10,6 +10,7 @@ public class Crash : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
+			"AIModule",
 			"Core",
 			"CoreUObject",
 			"Engine",

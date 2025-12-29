@@ -125,6 +125,13 @@ A death state can be achieved using gameplay effects. Destroying, respawning and
 
 > Transitioning to ragdoll physics at the end of the death animation would be snappy and show. If the transition happens mid-animation it will be much smoother and more difficult to observe.
 
+## 54. Add the TeamID to the Player Controller and Player Character
+
+> Adding the team id to the player controller makes it easier for retrieving locations and respawning. 
+ 
+> We also implement this on the pawn because it needs to be aware of the team it belongs to. This could also store a reference of the player controller's, but in a multiplayer scenario it may not replicate properly.
+> Setting the CCharacter::TeamId in the CPlayerController::OnPossess means that the team id on the controller needs to be set _prior_ to it being called.
+
 Will not be using ragdoll at all. It needs extra setting up as indicated here `LogPhysics: Warning: Invalid Simulate Options: Body (BP_CPlayerCharacter1.CharacterMesh0 Crunch_Black_Site) is set to simulate physics but Collision Enabled is incompatible`.
 
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
