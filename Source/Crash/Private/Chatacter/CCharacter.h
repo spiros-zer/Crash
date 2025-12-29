@@ -57,6 +57,12 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Death")
 	TObjectPtr<UAnimMontage> DeathMontage;
+	
+	/** 
+	 * Subtracted from the DeathMontage's duration.
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "Death")
+	float DeathMontageFinishTimeShift = -0.8;
 
 private:
 	
@@ -79,8 +85,22 @@ private:
 	
 	void SetStatusGaugeEnabled(bool bIsEnabled);
 	
-	UPROPERTY()
-	TObjectPtr<UCAttributeSet> CAttributeSet;
+	/** 
+	 * Called when DeathMontage finishes.
+	 */
+	void DeathMontageFinished();
+	
+	void SetRagdollEnabled(bool bIsEnabled);
 	
 	FTimerHandle OverheadStatusGaugeVisibilityTimerHandle;
+	
+	FTimerHandle DeathMontageTimerHandle;
+	
+	/** 
+	 * Cahces the meshe's transform before detaching it from the root component.
+	 */
+	FTransform MeshRelativeTransform;
+	
+	UPROPERTY()
+	TObjectPtr<UCAttributeSet> CAttributeSet;
 };

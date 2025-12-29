@@ -121,6 +121,12 @@ A death state can be achieved using gameplay effects. Destroying, respawning and
 
 > A duration gameplay effect that lasts as long as the respawn time.
 
+## 51. Enable Ragdoll When Dead
+
+> Transitioning to ragdoll physics at the end of the death animation would be snappy and show. If the transition happens mid-animation it will be much smoother and more difficult to observe.
+
+Will not be using ragdoll at all. It needs extra setting up as indicated here `LogPhysics: Warning: Invalid Simulate Options: Body (BP_CPlayerCharacter1.CharacterMesh0 Crunch_Black_Site) is set to simulate physics but Collision Enabled is incompatible`.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.

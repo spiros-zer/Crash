@@ -37,6 +37,8 @@ void ACCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	MeshRelativeTransform = GetMesh()->GetRelativeTransform();
+	
 	ConfigureOverheadStatusWidget();
 	
 	BindGASChangeDelegates();
@@ -149,6 +151,8 @@ void ACCharacter::Respawn()
 {
 	OnRespawn();
 	
+	SetRagdollEnabled(false);
+	
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	
 	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
@@ -167,7 +171,11 @@ void ACCharacter::PlayDeathAnimation()
 {
 	check(DeathMontage);
 	
-	PlayAnimMontage(DeathMontage);
+	const float MontageDuration = PlayAnimMontage(DeathMontage);
+	
+	// Turn to ragdoll physics a little earlier from the DeathMontage's finish. This makes the transition smoother.
+	
+	GetWorldTimerManager().SetTimer(DeathMontageTimerHandle, this, &ThisClass::DeathMontageFinished, MontageDuration + DeathMontageFinishTimeShift);
 }
 
 void ACCharacter::SetStatusGaugeEnabled(bool bIsEnabled)
@@ -181,5 +189,26 @@ void ACCharacter::SetStatusGaugeEnabled(bool bIsEnabled)
 	else
 	{
 		OverheadWidgetComponent->SetHiddenInGame(true);
+	}
+}
+
+void ACCharacter::DeathMontageFinished()
+{
+	// SetRagdollEnabled(true); Disabled ragdoll physics
+}
+
+void ACCharacter::SetRagdollEnabled(bool bIsEnabled)
+{
+	if (bIsEnabled)
+	{
+		GetMesh()->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	}
+	{
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetSimulatePhysics(false);
+		GetMesh()->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		GetMesh()->SetRelativeTransform(MeshRelativeTransform);
 	}
 }
