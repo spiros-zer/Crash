@@ -14,8 +14,7 @@ void UValueGauge::NativePreConstruct()
 	ProgressBar->SetFillColorAndOpacity(BarColor);
 }
 
-void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* AbilitySystemComponent,
-	const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute)
+void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute, const FGameplayAttribute& MaxAttribute)
 {
 	if (!IsValid(AbilitySystemComponent)) return;
 	
@@ -31,6 +30,8 @@ void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* Abilit
 	}
 	else
 	{
+		// Set values here in case we lost any replicated data until this widget initialized.
+	
 		SetValue(Value, MaxValue);
 	}
 	
@@ -40,7 +41,7 @@ void UValueGauge::SetAndBoundToGameplayAttribute(UAbilitySystemComponent* Abilit
 
 void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 {
-	// Setting progressbar
+	CachedValue = NewValue;
 	
 	if (!NewMaxValue)
 	{
@@ -49,7 +50,7 @@ void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 		return;
 	}
 	
-	CachedValue = NewValue;
+	// Setting progressbar
 	
 	CachedMaxValue = NewMaxValue;
 	
@@ -68,6 +69,8 @@ void UValueGauge::SetValue(float NewValue, float NewMaxValue)
 	Args.Add("1", FText::AsNumber(NewMaxValue, &FormattingOptions));
 	
 	ValueText->SetText(FText::Format(UnformattedText, Args));
+	
+	SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 }
 
 void UValueGauge::ValueChanged(const FOnAttributeChangeData& OnAttributeChangeData)
