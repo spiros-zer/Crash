@@ -183,6 +183,15 @@ void ACCharacter::Respawn()
 	
 	if (!IsValid(CAbilitySystemComponent)) return;
 	CAbilitySystemComponent->ApplyFullStatEffect();
+	
+	// Spawn to assigned StartSpot
+	
+	if (HasAuthority() && GetController())
+	{
+		const TWeakObjectPtr<AActor> StartSpot = GetController()->StartSpot;
+		
+		SetActorTransform(StartSpot->GetActorTransform());
+	}
 }
 
 void ACCharacter::PlayDeathAnimation()

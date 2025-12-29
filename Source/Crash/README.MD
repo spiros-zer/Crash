@@ -134,6 +134,12 @@ A death state can be achieved using gameplay effects. Destroying, respawning and
 
 Will not be using ragdoll at all. It needs extra setting up as indicated here `LogPhysics: Warning: Invalid Simulate Options: Body (BP_CPlayerCharacter1.CharacterMesh0 Crunch_Black_Site) is set to simulate physics but Collision Enabled is incompatible`.
 
+## 56. Respawn Player Character At Their Start Spot
+
+Utilizing the start spot, we can assign a spawn spot to a player and spawn them always there.
+
+> StartSpot is only server side as it isn't replicated to the client.
+
 ## 221. Create the Lobby Level and Spawn the Lobby Widget
 
 Set `AGameModeBase::bUseSeamlessTravel = true` in order to allow the player state to copy its contents to the next player state.
